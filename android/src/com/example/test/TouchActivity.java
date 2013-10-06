@@ -19,6 +19,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+/**
+ * 
+ * 实现了设置最低亮度
+ * 点击，双击，长按，单指滑动功能
+ * 勉强能用，呵呵，有待加强
+ */
 public class TouchActivity extends NoTitleActivity implements OnGestureListener {
 
 	GestureDetector detector;		// 手势解析
@@ -57,15 +63,15 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 	@Override
 	public boolean onFling(MotionEvent e, MotionEvent e2, float x,
 			float y) {
-		System.out.println("onFling : " + pointer);
+//		System.out.println("onFling : " + pointer);
 //		new TouchTask().execute(new WindowsMessage("onFling", x, y, e.getX(), e.getY(), e2.getX(), e2.getY()));
 		return true;
 	}
 
 	@Override
 	public void onLongPress(MotionEvent e) {
-		System.out.println("onLongPress");
-		new TouchTask().execute(new WindowsMessage("onLongPress"));
+//		System.out.println("onLongPress");
+		new TouchTask().execute(new WindowsMessage("clickRight"));
 	}
 
 	@Override
@@ -73,7 +79,7 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 			float y) {
 //		int pc = e.getPointerCount();
 //		System.out.println(pc);
-		System.out.println("onScroll : " + pointer);
+//		System.out.println("onScroll : " + pointer);
 		switch (pointer) {
 		case 1:
 			new TouchTask().execute(new WindowsMessage("move", x, y, e.getX(), e.getY(), e2.getX(), e2.getY()));
@@ -87,13 +93,13 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 
 	@Override
 	public void onShowPress(MotionEvent e) {
-		System.out.println("onShowPress");
+//		System.out.println("onShowPress");
 //		new TouchTask().execute(new WindowsMessage("onSingleTapUp"));
 	}
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
-		System.out.println("onSingleTapUp");
+//		System.out.println("onSingleTapUp");
 		new TouchTask().execute(new WindowsMessage("clickLeft"));
 		return true;
 	}

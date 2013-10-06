@@ -10,7 +10,7 @@ public class TouchTestActivity extends Activity {
 		// TODO Auto-generated method stub
 //		super.onTouchEvent(event);
 		
-		System.out.println(event.getPointerCount());
+//		System.out.println(event.getPointerCount() + " - " + event.get);
 		
 		
 		return true;
