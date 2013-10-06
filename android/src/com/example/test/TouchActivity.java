@@ -33,9 +33,12 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 	
 	int SCREEN_BRIGHTNESS;			// 原来的亮度
 	
+	static String ip;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ip = getIntent().getStringExtra("ip");
 		detector = new GestureDetector(this, this);
 		try {
 			// 原来的亮度
@@ -140,7 +143,8 @@ class TouchTask extends AsyncTask<WindowsMessage, View, String> {
 //			if (socket == null || socket.isClosed()) {
 //				socket = new Socket("192.168.137.1", 5230);
 //			}
-			Socket socket = new Socket("192.168.137.1", 5230);
+			//Socket socket = new Socket("192.168.137.1", 5230);
+			Socket socket = new Socket(TouchActivity.ip, 5230);
 
 			OutputStream out = socket.getOutputStream();
 			out.write(obj.toString().getBytes());
