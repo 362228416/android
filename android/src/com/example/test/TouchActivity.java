@@ -1,7 +1,8 @@
 package com.example.test;
 
-import java.io.OutputStream;
-import java.net.Socket;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.accounts.Account;
 import android.app.Service;
@@ -33,12 +34,12 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 	
 	int SCREEN_BRIGHTNESS;			// 原来的亮度
 	
-	static String ip;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ip = getIntent().getStringExtra("ip");
+		TouchTask.ip = getIntent().getStringExtra("ip");
+		TouchTask.port = getIntent().getIntExtra("port", 5230);
+		
 		detector = new GestureDetector(this, this);
 		try {
 			// 原来的亮度
@@ -112,49 +113,58 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 		super.onDestroy();
 		// 还原亮度
 		android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, SCREEN_BRIGHTNESS);
-		try {
-			TouchTask.socket.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			TouchTask.socket.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 }
 
 class TouchTask extends AsyncTask<WindowsMessage, View, String> {
 	
-	public static Socket socket;
+//	public static Socket socket;
 	
-
+	static String ip;
+	static int port;
+	
 	@Override
 	protected String doInBackground(WindowsMessage... params) {
-		try {
-			for (WindowsMessage windowsMessage : params) {
-				send(windowsMessage);
-			} 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		for (WindowsMessage windowsMessage : params) {
+			send(windowsMessage);
+		} 
 		return null;
 	}
 	
-	static synchronized void send(Object obj) {
+	static synchronized void send(WindowsMessage message) {
 		try {
 //			if (socket == null || socket.isClosed()) {
 //				socket = new Socket("192.168.137.1", 5230);
 //			}
 			//Socket socket = new Socket("192.168.137.1", 5230);
-			Socket socket = new Socket(TouchActivity.ip, 5230);
-
-			OutputStream out = socket.getOutputStream();
-			out.write(obj.toString().getBytes());
-			out.flush();
+//			Socket socket = new Socket(TouchActivity.ip, 5230);
+//
+//			OutputStream out = socket.getOutputStream();
+//			out.write(message.toString().getBytes());
+//			out.flush();
+//			
+//			socket.close();
 			
-			socket.close();
+			HttpClient client = new DefaultHttpClient();
+			String url = "http://" + ip + ":" + port + "/?" + makeUrl(message);
+			System.out.println(url);
+			client.execute(new HttpGet(url));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	static String makeUrl(WindowsMessage message) {
+		return "action=" + message.action + "&x=" + message.x + "&y=" + message.y;
+	}
+	
 	
 }
 
