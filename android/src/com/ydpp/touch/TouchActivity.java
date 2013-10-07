@@ -137,7 +137,7 @@ class TouchTask extends AsyncTask<WindowsMessage, View, String> {
 		try {
 			HttpClient client = new DefaultHttpClient();
 			String url = "http://" + ip + ":" + port + "/?" + makeUrl(message);
-			System.out.println(url);
+//			System.out.println(url);
 			client.execute(new HttpGet(url));
 		} catch (Exception e) {
 			e.printStackTrace();
