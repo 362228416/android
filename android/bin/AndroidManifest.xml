@@ -20,18 +20,6 @@
         android:icon="@drawable/touch_pad"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" android:logo="@drawable/touch_pad">
-        <activity
-            android:name="com.ydpp.touch.MainActivity"
-            android:label="@string/app_name" >
-            
-        </activity>
-        <activity android:name="AppActivity" android:label="@string/app_name">
-        </activity>
-        <activity android:name="com.ydpp.touch.DrawActivity" android:label="@string/app_name">
-            
-        </activity>
-        <activity android:name="ImgActivity">
-        </activity>
         
         <activity android:name="ConnectActivity">
             <intent-filter>
