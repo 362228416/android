@@ -1,8 +1,10 @@
-package com.example.test;
+package com.ydpp.touch;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+
+import com.ydpp.touch.R;
 
 import android.annotation.SuppressLint;
 import android.gesture.Gesture;

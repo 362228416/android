@@ -1,4 +1,4 @@
-package com.example.test;
+package com.ydpp.touch;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -84,6 +84,9 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 //		int pc = e.getPointerCount();
 //		System.out.println(pc);
 //		System.out.println("onScroll : " + pointer);
+		
+		// 这里的pointer总是1，坑爹
+		
 		switch (pointer) {
 		case 1:
 			new TouchTask().execute(new WindowsMessage("move", x, y, e.getX(), e.getY(), e2.getX(), e2.getY()));
@@ -113,18 +116,11 @@ public class TouchActivity extends NoTitleActivity implements OnGestureListener 
 		super.onDestroy();
 		// 还原亮度
 		android.provider.Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, SCREEN_BRIGHTNESS);
-//		try {
-//			TouchTask.socket.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 }
 
 class TouchTask extends AsyncTask<WindowsMessage, View, String> {
-	
-//	public static Socket socket;
 	
 	static String ip;
 	static int port;
@@ -137,25 +133,12 @@ class TouchTask extends AsyncTask<WindowsMessage, View, String> {
 		return null;
 	}
 	
-	static synchronized void send(WindowsMessage message) {
+	static void send(WindowsMessage message) {
 		try {
-//			if (socket == null || socket.isClosed()) {
-//				socket = new Socket("192.168.137.1", 5230);
-//			}
-			//Socket socket = new Socket("192.168.137.1", 5230);
-//			Socket socket = new Socket(TouchActivity.ip, 5230);
-//
-//			OutputStream out = socket.getOutputStream();
-//			out.write(message.toString().getBytes());
-//			out.flush();
-//			
-//			socket.close();
-			
 			HttpClient client = new DefaultHttpClient();
 			String url = "http://" + ip + ":" + port + "/?" + makeUrl(message);
 			System.out.println(url);
 			client.execute(new HttpGet(url));
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -184,13 +167,6 @@ class WindowsMessage {
 		this.y1 = y1;
 		this.x2 = x2;
 		this.y2 = y2;
-	}
-	public String toJson() {
-		return "[\"action\":\"" + action + "\", \"x\":" + x + ", \"y\":" + y + "]";
-	}
-	@Override
-	public String toString() {
-		return action + "," + x + "," + y + "," + x1 + "," + y1 + "," + x2 + "," + y2;
 	}
 }
 

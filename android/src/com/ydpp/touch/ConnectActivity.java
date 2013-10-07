@@ -1,8 +1,10 @@
-package com.example.test;
+package com.ydpp.touch;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+
+import com.ydpp.touch.R;
 
 import android.content.Intent;
 import android.os.AsyncTask;

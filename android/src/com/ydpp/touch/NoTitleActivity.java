@@ -1,4 +1,4 @@
-package com.example.test;
+package com.ydpp.touch;
 
 import android.app.Activity;
 import android.view.Window;
