@@ -37,7 +37,7 @@ public class ImgActivity extends Activity {
 					view.setImageDrawable(null);
 					flag = false;
 				} else {
-					view.setImageResource(R.drawable.ic_launcher);
+					view.setImageResource(R.drawable.touch_pad);
 					flag = true;
 				}
 				
