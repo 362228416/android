@@ -1,23 +1,15 @@
 package com.ydpp.touch;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-
-import com.ydpp.touch.R;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.SuppressLint;
-import android.gesture.Gesture;
-import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
-import android.gesture.GestureOverlayView;
-import android.gesture.GestureOverlayView.OnGesturePerformedListener;
-import android.gesture.GestureStore;
-import android.gesture.Prediction;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.MotionEvent;
-import android.widget.Toast;
+import android.view.View;
 
 public class TouchTestActivity extends NoTitleActivity {
 	
@@ -28,7 +20,7 @@ public class TouchTestActivity extends NoTitleActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.touch_test);
-		
+		/*
 		try {
 //			GestureLi
 			File file = new File(Environment.getExternalStorageDirectory().getPath() + "/code/ss");
@@ -79,54 +71,173 @@ public class TouchTestActivity extends NoTitleActivity {
 				
 			}
 		});
+		*/
+		
+		
+		
+		
+		
 		
 		
 		
 	}
 	
+	
+	float px1, py1, px2, py2, px3, py3;
+	
+	boolean longPressed = false;
+	
+	long downTime = 0;
+	
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
 		// TODO Auto-generated method stub
-		return super.onTouchEvent(e);
+//		return super.onTouchEvent(e);
 		
 //		System.out.println(e.getPointerCount() + " - " + e.getAction() + " - " + e.getHistorySize());
 		
-//		int count = e.getPointerCount();
-//		switch(count) {
-//		case 1:
-//			System.out.println("一指");
-//			break;
-//		case 2:
-////			int x = (int) (e.getX() - e.getX(1));
-////			int y = (int) (e.getY() - e.getY(1));
-////			System.out.println("双指 x = " + x + " , y = " + y);
-//			
-////			System.out.println("双指: " + e.getY() + " - " + e.getY(0) + " - " + e.getY(1));
-//			
-////			System.out.println("双指: " + e.getY() + " - " + e.getY(1));
-//			
-////			System.out.println(e.getHistoricalY(0) + " - " + e.getHistoricalY(1));
-//			
-////			System.out.println("双指: " + (e.getY(1) - e.getY() > 0 ? "下" : "上"));
-//			
-////			System.out.println(e.getOrientation() + " - " + e.getOrientation(1));
-////			System.out.println(e.getAction());
-//			if (e.getHistorySize() > 0) {
-////				System.out.println("双指: " + (e.getX() - e.getHistoricalX(0) > 0 ? "右" : "左"));
-////				System.out.println("双指: " + (e.getY() - e.getHistoricalY(0) > 0 ? "下" : "上"));
-//				
-////				System.out.println(e.getAxisValue(MotionEvent.AXIS_X) + " - " + e.getAxisValue(MotionEvent.AXIS_Y));
-////				System.out.println(e.get);
+//		System.out.println(e.getAction() + " - " + e.getEventTime());
+		
+		int count = e.getPointerCount();
+		float x = e.getX();
+		float y = e.getY();
+		switch(count) {
+		case 1:
+//			System.out.println(e.getDownTime());
+//			System.out.println();
+			
+			// TODO　单指滑动
+			if (e.getAction() == MotionEvent.ACTION_MOVE) {
+				System.out.println("滑动");
+			}
+			if (e.getAction() == MotionEvent.ACTION_UP) {
+				longPressed = false;
+				if (e.getEventTime() - e.getDownTime() < 500) {
+					System.out.println("单击");
+				}
+			}
+//			if (e.getAction() == MotionEvent.ACTION_UP && e.getEventTime() - e.getDownTime() < 500) {
+//				System.out.println("单击");
 //				
 //			}
-//			
-//			break;
-//		case 3:
-//			System.out.println("三指");
-//			break;
-//		}
-//		
-//		return true;
+			
+//			// TODO 长按
+//			if (e.getAction() == MotionEvent.ACTION_DOWN) {
+//				downTime = e.getDownTime();
+////				System.out.println(e.getEventTime()  + "-" + e.getDownTime());
+//			}
+//			if (!longPressed && e.getEventTime() - downTime > 500) {
+//				longPressed = true;
+//				System.out.println("长按");
+//			}
+//			System.out.println(e.getEventTime() - downTime);
+//			if (e.getAction() == MotionEvent.ACTION_DOWN && pressed) {
+//				pressed = true;
+////				System.out.println("长按");
+////				firstLongDown = false;
+//				System.out.println(e.getEventTime() - e.getDownTime());
+//			}
+//			if (e.get)
+//			if (e.getAction() == MotionEvent.ACTION_DOWN && firstLongDown && e.getEventTime() - e.getDownTime() > 700) {
+//				System.out.println("长按");
+//				firstLongDown = false;
+//			}
+			//System.out.println("一指");
+			break;
+		case 2:
+			//System.out.println(e.getAction() + " , " + MotionEvent.ACTION_POINTER_UP + " , " + (e.getAction() == MotionEvent.ACTION_POINTER_UP));
+			System.out.println(e.getAction());
+			if (e.getHistorySize() > 0) {
+			
+//				System.out.println("双指: " + (e.getY() - e.getHistoricalY(0) > 0 ? "下" : "上"));
+//				System.out.println(e.getHistoricalY(0)- e.getY());
+				
+				float posx = Math.abs(e.getX() - e.getHistoricalX(0));
+				float posy = Math.abs(e.getY() - e.getHistoricalY(0));
+//				System.out.println(posy);
+				if (posx <= 0.1 && posy > 0.1) {
+//					System.out.println(pos);
+//					System.out.println((e.getY() - e.getHistoricalY(0) > 0 ? "上滑动" : "下滑动"));
+//					new TouchTask2().execute(new WindowsMessage("scroll", 0, (e.getHistoricalY(0)- e.getY()), 0, 0, 0, 0));
+					new TouchTask2().execute(new WindowsMessage("scroll", 0, (e.getHistoricalY(0)- e.getY() > 0 ? 1 : -1), 0, 0, 0, 0));
+					
+				}
+				
+			}
+			
+//			if (e.getAction() == MotionEvent.ACTION_POINTER_DOWN) {
+			if (e.getHistorySize() == 0) {
+				px2 = px2 == 0 ? x : px2;
+				py2 = py2 == 0 ? y : py2;
+				
+			}
+			
+			float pos = x - px2;
+//			System.out.println(pos);
+//			System.out.println(px2 + " , " + x);
+			if (Math.abs(pos) > 30 && e.getAction() == MotionEvent.ACTION_POINTER_UP) {
+//				System.out.println("双指: " + (e.getX() - e.getHistoricalX(0) > 0 ? "右" : "左"));
+//				System.out.println("双指: " + (e.getY() - e.getHistoricalY(0) > 0 ? "下" : "上"));
+				
+//				System.out.println("双指手势: " + (e.getX() - px2 > 0 ? "右" : "左") + "  " + e.getX() + " , " + px2 + " position : " + Math.abs(e.getX() - px2));
+//				System.out.println("双指手势: " + (e.getY() - py2 > 0 ? "下" : "上"));
+				
+//				System.out.println("双指手势: " + (pos > 0 ? "右" : "左") + " , " + pos);
+//				System.out.println((pos > 0 ? "前进" : "后退"));
+				String action = pos > 0 ? "go" : "back";
+				//send(new WindowsMessage(action));
+				new TouchTask2().execute(new WindowsMessage(action));
+//				System.out.println("完成" + e.getHistorySize());
+				
+				
+				px2 = 0;
+				py2 = 0;
+//				System.out.println(e.getAxisValue(MotionEvent.AXIS_X) + " - " + e.getAxisValue(MotionEvent.AXIS_Y));
+//				System.out.println(e.get);
+				
+			}
+			
+			break;
+		case 3:
+			System.out.println("三指");
+			break;
+		}
+		
+		return true;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+class TouchTask2 extends AsyncTask<WindowsMessage, View, String> {
+	
+	static String url = "http://192.168.137.1:5230/?";
+	
+	@Override
+	protected String doInBackground(WindowsMessage... params) {
+		for (WindowsMessage windowsMessage : params) {
+			send(windowsMessage);
+		} 
+		return null;
+	}
+	
+	static void send(WindowsMessage message) {
+		try {
+			HttpClient client = new DefaultHttpClient();
+			String str = url + "action=" + message.action + "&x=" + message.x + "&y=" + message.y;
+//			System.out.println(url);
+			client.execute(new HttpGet(str));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

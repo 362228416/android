@@ -26,12 +26,13 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
         
         <activity android:name="TouchActivity">
+			            
         </activity>
         <activity android:name="TouchTestActivity">
-            
         </activity>
         
     </application>
